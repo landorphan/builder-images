@@ -89,7 +89,7 @@ jobs:
           context: .
           file: Dockerfile.${{ matrix.images }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/landorphan/${{ matrix.images }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: /tmp/.buildx-cache-from
           cache-to: /tmp/.buildx-cache
