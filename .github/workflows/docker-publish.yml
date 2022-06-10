@@ -60,7 +60,7 @@ jobs:
             ${{ runner.os }}-buildx-${{ matrix.images }}-
       
       - name: Move Existing layer cache
-        run: mv /tmp/.buildx-cache /tmp/.buildx-cache-from
+        run: mkdir -p /tmp/.buildx-cache && mv /tmp/.buildx-cache /tmp/.buildx-cache-from
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
