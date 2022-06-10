@@ -89,9 +89,9 @@ jobs:
           context: .
           file: Dockerfile.${{ matrix.images }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: landorphan/${{ matrix.images }}:latest
-          from-cache: /tmp/.buildx-cache-from
-          to-cache: /tmp/.buildx-cache
+          tags: ${{ env.REGISTRY }}/${{ matrix.images }}:latest, ${{ env.REGISTRY }}/${{ matrix.images }}:${{ github.sha }}
+          cache-from: /tmp/.buildx-cache-from
+          cache-to: /tmp/.buildx-cache
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
