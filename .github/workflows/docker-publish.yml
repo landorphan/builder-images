@@ -89,7 +89,7 @@ jobs:
           context: .
           file: Dockerfile.${{ matrix.images }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ matrix.images }}:latest, ${{ env.REGISTRY }}/${{ matrix.images }}:${{ github.sha }}
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.images }}:latest, ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.images }}:${{ github.sha }}
           cache-from: /tmp/.buildx-cache-from
           cache-to: /tmp/.buildx-cache
 
