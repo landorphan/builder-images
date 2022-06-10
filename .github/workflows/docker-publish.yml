@@ -58,6 +58,9 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ matrix.images }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-${{ matrix.images }}-
+      
+      - name: Move Existing layer cache
+        run: mv /tmp/.buildx-cache /tmp/.buildx-cache-from
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
@@ -87,6 +90,8 @@ jobs:
           file: Dockerfile.${{ matrix.images }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: landorphan/${{ matrix.images }}:latest
+          from-cache: /tmp/.buildx-cache-from
+          to-cache: /tmp/.buildx-cache
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
